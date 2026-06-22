@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Custom catering, handcrafted food platters, grazing tables, and event service throughout Northumberland, Ontario and surrounding areas.">
+    <meta name="theme-color" content="#1a1a1a">
+    <title>Sheppard's Creations | Catering & Food Platters</title>
+    <style>
+        :root {
+            --gold: #c8a45c;
+            --gold-light: #e0c88e;
+            --dark: #1a1a1a;
+            --dark-soft: #2c2c2c;
+            --cream: #faf7f2;
+            --white: #ffffff;
+            --text: #3d3d3d;
+            --text-light: #6b6b6b;
+            --olive: #5a6b3e;
+            --olive-light: #7a8f58;
+            --rust: #b8543a;
+            --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.10);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --font-heading: 'Georgia', 'Times New Roman', serif;
+            --font-body: 'Inter', 'Segoe UI', 'Helvetica Neue', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text);
+            background-color: var(--cream);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        section[id] {
+            scroll-margin-top: 80px;
+        }
+
+        .skip-link {
+            position: fixed;
+            top: 0.75rem;
+            left: 0.75rem;
+            z-index: 3000;
+            padding: 0.7rem 1rem;
+            border-radius: var(--radius-sm);
+            background: var(--white);
+            color: var(--dark);
+            font-weight: 700;
+            text-decoration: none;
+            transform: translateY(-160%);
+            transition: transform 0.2s ease;
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--gold-light);
+            outline-offset: 4px;
+        }
+
+        /* ───────── NAVIGATION ───────── */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: background-color var(--transition), padding var(--transition), box-shadow var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            padding: 0.7rem 2rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-logo {
+            font-family: var(--font-heading);
+            font-size: 1.65rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: color var(--transition);
+            white-space: nowrap;
+        }
+        .nav-logo span {
+            color: var(--gold);
+        }
+        .navbar.scrolled .nav-logo {
+            color: var(--gold-light);
+        }
+        .navbar.scrolled .nav-logo span {
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            transition: color var(--transition);
+            position: relative;
+            padding: 0.35rem 0;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width var(--transition);
+        }
+        .nav-links a:hover {
+            color: var(--gold-light);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .navbar.scrolled .nav-links a {
+            color: rgba(255, 255, 255, 0.85);
+        }
+        .nav-cta {
+            background: var(--gold);
+            color: var(--dark) !important;
+            padding: 0.55rem 1.5rem !important;
+            border-radius: 50px;
+            font-weight: 600 !important;
+            letter-spacing: 0.3px;
+            transition: all var(--transition) !important;
+            white-space: nowrap;
+        }
+        .nav-cta::after {
+            display: none !important;
+        }
+        .nav-cta:hover {
+            background: var(--gold-light) !important;
+            color: var(--dark) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(200, 164, 92, 0.4);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+            background: none;
+            border: none;
+            padding: 8px;
+        }
+        .hamburger span {
+            width: 28px;
+            height: 2.5px;
+            background: var(--white);
+            border-radius: 3px;
+            transition: all var(--transition);
+            display: block;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ───────── HERO ───────── */
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            max-width: none;
+            margin: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.5)),
+                url('images/dws1.jpg') center/cover no-repeat;
+            background-attachment: fixed;
+            padding: 2rem;
+        }
+        .hero-content {
+            max-width: 780px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: var(--gold-light);
+            padding: 0.5rem 1.4rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2.8rem, 6vw, 4.8rem);
+            color: var(--white);
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+            letter-spacing: -1px;
+        }
+        .hero h1 em {
+            font-style: italic;
+            color: var(--gold-light);
+            display: block;
+            font-size: 0.7em;
+            letter-spacing: 0;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 2.5rem;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        .hero-btns {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.85rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.4px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: none;
+            font-family: var(--font-body);
+        }
+        .btn-primary {
+            background: var(--gold);
+            color: var(--dark);
+        }
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(200, 164, 92, 0.45);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--white);
+            transform: translateY(-3px);
+        }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            background: none;
+            border: 0;
+            padding: 0.35rem;
+        }
+        .scroll-indicator svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--white);
+            opacity: 0.7;
+        }
+        @keyframes bounce {
+            0%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(12px);
+            }
+        }
+
+        /* ───────── SECTIONS ───────── */
+        section {
+            padding: 5.5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-label {
+            display: inline-block;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            color: var(--dark);
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+        .section-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 550px;
+            margin-bottom: 3rem;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+        .section-header .section-subtitle {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ───────── ABOUT ───────── */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .about-image-wrapper {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        .about-image-wrapper img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            display: block;
+            border-radius: var(--radius);
+            transition: transform 0.6s ease;
+        }
+        .about-image-wrapper:hover img {
+            transform: scale(1.04);
+        }
+        .about-image-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            width: 160px;
+            height: 160px;
+            background: var(--gold);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        .about-text .section-label {
+            text-align: left;
+        }
+        .about-text p {
+            margin-bottom: 1.2rem;
+            color: var(--text-light);
+            font-size: 1.05rem;
+        }
+        .about-stats {
+            display: flex;
+            gap: 2.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .stat-item h3 {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .stat-item span {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+
+        /* ───────── PLATTERS / MENU ───────── */
+        .platters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .platter-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+            position: relative;
+        }
+        .platter-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+        .platter-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .platter-card:hover img {
+            transform: scale(1.06);
+        }
+        .platter-card-body {
+            padding: 1.6rem;
+        }
+        .platter-card-body h3 {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            color: var(--dark);
+            margin-bottom: 0.4rem;
+        }
+        .platter-card-body .price {
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 0.6rem;
+        }
+        .platter-card-body p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        .platter-tag {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: var(--rust);
+            color: #fff;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* ───────── SERVICES ───────── */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .service-card {
+            text-align: center;
+            padding: 2.5rem 1.8rem;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+            border: 1px solid transparent;
+        }
+        .service-card:hover {
+            border-color: var(--gold-light);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+        }
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--gold-light), var(--gold));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.4rem;
+            font-size: 1.8rem;
+            color: var(--dark);
+        }
+        .service-card h3 {
+            font-family: var(--font-heading);
+            margin-bottom: 0.6rem;
+            color: var(--dark);
+        }
+        .service-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* ───────── GALLERY ───────── */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 220px;
+            gap: 1rem;
+        }
+        .gallery-item {
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+        .gallery-item.wide {
+            grid-column: span 2;
+        }
+        .gallery-item.tall {
+            grid-row: span 2;
+        }
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            opacity: 0;
+            transition: opacity var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        /* ───────── TESTIMONIALS ───────── */
+        .testimonials-slider {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 1rem;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold-light) transparent;
+        }
+        .testimonials-slider::-webkit-scrollbar {
+            height: 6px;
+        }
+        .testimonials-slider::-webkit-scrollbar-thumb {
+            background: var(--gold-light);
+            border-radius: 10px;
+        }
+        .testimonial-card {
+            min-width: 350px;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid var(--gold);
+        }
+        .testimonial-card .stars {
+            color: var(--gold);
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+        }
+        .testimonial-card p {
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        .testimonial-card .author {
+            font-weight: 700;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+        .testimonial-card .author span {
+            color: var(--text-light);
+            font-weight: 400;
+            font-size: 0.8rem;
+            display: block;
+        }
+
+        /* ───────── CONTACT ───────── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        .contact-info h3 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        .contact-info p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+        .contact-detail .icon-circle {
+            width: 44px;
+            height: 44px;
+            background: var(--gold-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+        .contact-form {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+        .contact-form input,
+        .contact-form select,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            margin-bottom: 1.1rem;
+            border: 2px solid #e8e3d9;
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: border var(--transition);
+            background: var(--cream);
+            color: var(--text);
+            outline: none;
+        }
+        .contact-form textarea {
+            border-radius: var(--radius-sm);
+            resize: vertical;
+            min-height: 120px;
+        }
+        .contact-form input:focus,
+        .contact-form select:focus,
+        .contact-form textarea:focus {
+            border-color: var(--gold);
+            background: #fff;
+        }
+        .contact-form button {
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--gold);
+            color: var(--dark);
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: all var(--transition);
+        }
+        .contact-form button:hover {
+            background: var(--gold-light);
+            box-shadow: 0 8px 25px rgba(200, 164, 92, 0.4);
+        }
+
+        .field-label {
+            display: block;
+            margin: 0 0 0.35rem 0.2rem;
+            color: var(--dark);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .form-note {
+            margin: -0.25rem 0 1rem;
+            color: var(--text-light);
+            font-size: 0.82rem;
+            line-height: 1.45;
+        }
+        .contact-detail a {
+            color: inherit;
+            text-decoration-color: var(--gold);
+            text-underline-offset: 3px;
+        }
+
+        .reveal {
+            opacity: 0;
+            translate: 0 30px;
+            transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                translate 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.is-visible {
+            opacity: 1;
+            translate: 0 0;
+        }
+
+        /* ───────── FOOTER ───────── */
+        footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 3.5rem 2rem 1.5rem;
+            text-align: center;
+        }
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+        .footer-col h4 {
+            color: var(--white);
+            font-family: var(--font-heading);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        .footer-col a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color var(--transition);
+            font-size: 0.9rem;
+        }
+        .footer-col a:hover {
+            color: var(--gold-light);
+        }
+        .footer-bottom {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.45);
+        }
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.8rem;
+        }
+        .footer-social a {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            transition: background var(--transition);
+            font-size: 0.85rem;
+        }
+        .footer-social a:hover {
+            background: var(--gold);
+            color: var(--dark);
+        }
+
+        /* ───────── MODAL ───────── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity var(--transition);
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        .modal {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px);
+            transition: transform var(--transition);
+        }
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+        .modal .check-icon {
+            font-size: 3.5rem;
+            color: var(--olive);
+            margin-bottom: 1rem;
+        }
+        .modal h3 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        .modal p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+        .modal button {
+            padding: 0.7rem 2rem;
+            background: var(--gold);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all var(--transition);
+        }
+        .modal button:hover {
+            background: var(--gold-light);
+        }
+
+        /* ───────── RESPONSIVE ───────── */
+        @media (max-width: 968px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .about-image-wrapper {
+                order: -1;
+            }
+            .about-image-wrapper img {
+                height: 320px;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: 180px;
+            }
+            .gallery-item.wide {
+                grid-column: span 1;
+            }
+            .gallery-item.tall {
+                grid-row: span 1;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 75%;
+                max-width: 320px;
+                height: 100vh;
+                background: rgba(26, 26, 26, 0.97);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                gap: 2rem;
+                transition: right var(--transition), visibility var(--transition);
+                padding: 2rem;
+                visibility: hidden;
+                pointer-events: none;
+            }
+            .nav-links.open {
+                right: 0;
+                visibility: visible;
+                pointer-events: auto;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .hero {
+                background-attachment: scroll;
+                min-height: 90vh;
+            }
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-auto-rows: 150px;
+                gap: 0.6rem;
+            }
+            .testimonial-card {
+                min-width: 280px;
+            }
+            .platters-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            section {
+                padding: 3.5rem 1.2rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .reveal {
+                opacity: 1;
+                translate: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <!-- ═══════════ NAVIGATION ═══════════ -->
+    <nav class="navbar" id="navbar">
+        <a href="#home" class="nav-logo" aria-label="Sheppard's Creations home">Sheppard's <span>Creations</span></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#platters">Platters</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact" class="nav-cta">Book Now</a></li>
+        </ul>
+        <button class="hamburger" id="hamburger" type="button" aria-label="Open navigation menu" aria-controls="navLinks" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main id="main-content">
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <span class="hero-badge">✨ Premium Catering</span>
+            <h1>Exquisite Platters<br><em>for Every Occasion</em></h1>
+            <p>From intimate family gathering and celebrations-of-life, to weddings, corporate function, and grand celebrations. Sheppard's Creations crafts stunning food platters that delight the senses and elevate your event.</p>
+            <div class="hero-btns">
+                <a href="#platters" class="btn btn-primary">Explore Our Menu</a>
+                <a href="#contact" class="btn btn-outline">Get a Quote</a>
+            </div>
+        </div>
+        <button class="scroll-indicator" id="scrollToAbout" type="button" aria-label="Scroll to our story">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+        </button>
+    </section>
+
+    <!-- ═══════════ ABOUT ═══════════ -->
+    <section id="about">
+        <div class="about-grid">
+            <div class="about-image-wrapper">
+                <img src="images/dws13.jpg"
+                alt="Beautiful catering spread by Sheppard's Creations" loading="lazy">
+            </div>
+            <div class="about-text">
+                <span class="section-label">Our Story</span>
+                <h2 class="section-title">Crafted with Passion, Served with Love</h2>
+                <p>At Sheppard's Creations, we believe that food is more than sustenance — it's an experience. Founded with a vision to bring restaurant-quality platters to your doorstep, we specialize in bespoke catering for weddings, corporate events, birthdays, and everything in between.</p>
+                <p>Every platter is handcrafted using the freshest seasonal ingredients, artfully arranged to create a visual and culinary masterpiece. Our passionate chef, John Sheppard, will work closely with you to tailor every detail to perfection.</p>
+                <div class="about-stats">
+                    <div class="stat-item"><h3>100+</h3><span>Events Catered</span></div>
+                    <div class="stat-item"><h3>20+</h3><span>Years Experience</span></div>
+                    <div class="stat-item"><h3>100%</h3><span>Client Satisfaction</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ PLATTERS ═══════════ -->
+    <section id="platters">
+        <div class="section-header">
+            <span class="section-label">Our Menu</span>
+            <h2 class="section-title">Signature Platters</h2>
+            <p class="section-subtitle">Each platter is a carefully curated selection designed to impress. Custom orders are always welcome.</p>
+        </div>
+        <div class="platters-grid">
+            <div class="platter-card">
+                <span class="platter-tag">Bestseller</span>
+                <img src="images/dws52.png" alt="Fruit flowers Platter" loading="lazy">
+                <div class="platter-card-body">
+                    <h3>Signature Fruit Platter</h3>
+                    <span class="price">starting at $105</span>
+                    <p>Strawberries, pineapple, melon, grapes, starfruit, blueberries, and more.</p>
+                </div>
+            </div>
+            <div class="platter-card">
+                <span class="platter-tag">New</span>
+                <img src="images/dws10.jpg" alt="A large fruit platter" loading="lazy">
+                <div class="platter-card-body">
+                    <h3>Fruit Garden</h3>
+                    <span class="price">Starting at $125</span>
+                    <p>This classic platter will bring your special event a lovely and well known flavours!</p>
+                </div>
+            </div>
+            <div class="platter-card">
+                <img src="images/dws50.jpg" alt="platter consisting meats and cheese" loading="lazy">
+                <div class="platter-card-body">
+                    <h3>Classic Charcuterie</h3>
+                    <span class="price">Starting at $90</span>
+                    <p>A colourful selection of fresh seasonal vegetables, meat selections, and multiple types of cheese.</p>
+                </div>
+            </div>
+            <div class="platter-card">
+                <span class="platter-tag">Popular</span>
+                <img src="images/dws48.jpg" alt="A collection of tasty fruit and cheeeses." loading="lazy">
+                <div class="platter-card-body">
+                    <h3>Sweet and Savory Indulgence</h3>
+                    <span class="price">Starting at $85</span>
+                    <p>Fresh berries, lunch meat, cheeses, and more.</p>
+                </div>
+            </div>
+            <div class="platter-card">
+                <img src="images/dws47.jpg" alt="Garden Fresh Bouquet" loading="lazy">
+                <div class="platter-card-body">
+                    <h3>Garden Fresh Bouquet</h3>
+                    <span class="price">Starting at $82</span>
+                    <p>Expert fruity flower garnsishes arranged in way that will add a delicious aesthetic to your event of any kind!</p>
+                </div>
+            </div>
+            <div class="platter-card">
+                <img src="images/dws39.jpg" alt="Floral style Fruit" loading="lazy">
+                <div class="platter-card-body">
+                    <h3>Strawberries Within</h3>
+                    <span class="price">Starting $165</span>
+                    <p>A floral-inspired arrangement of fresh seasonal strawberries, and cheese carefully carved and artfully presented.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ SERVICES ═══════════ -->
+    <section id="services">
+        <div class="section-header">
+            <span class="section-label">What We Do</span>
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Full-service catering tailored to your event's unique needs.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon" aria-hidden="true">🍽️</div>
+                <h3>Private Events</h3>
+                <p>Birthdays, anniversaries, and intimate dinner parties with customized menus.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon" aria-hidden="true">💼</div>
+                <h3>Corporate Catering</h3>
+                <p>Impress clients and colleagues with professional boardroom platters and lunch spreads.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon" aria-hidden="true">💍</div>
+                <h3>Weddings</h3>
+                <p>Elegant grazing tables, canapés, and full wedding breakfast catering.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon" aria-hidden="true">🏠</div>
+                <h3>Delivery & Setup</h3>
+                <p>We deliver, style, and set up your platters so you can focus on hosting.</p>
+            </div>
+			<div class="service-card">
+			     <div class="service-icon" aria-hidden="true">🏠</div>
+				 <h3>Funeral Receptions/Celebration of life</h3>
+				 <p> Compassionate catering services for funeral Receptions, memorial gatherings, and celebrations of life. We provide beautifully prepared platters and professional service so families can focus on being together durring difficult time.
+        </div>
+    </section>
+
+    <!-- ═══════════ GALLERY ═══════════ -->
+    <section id="gallery">
+        <div class="section-header">
+            <span class="section-label">Gallery</span>
+            <h2 class="section-title">Our Creations</h2>
+            <p class="section-subtitle">A glimpse into the artistry behind every platter.</p>
+        </div>
+        <div class="gallery-grid">
+            <div class="gallery-item wide">
+                <img src="images/dws1.jpg" alt="charcuterie" loading="lazy">
+                <div class="gallery-overlay">Charcuterie</div>
+            </div>
+            <div class="gallery-item tall">
+                <img src="images/dws3.jpg" alt="Plated dish" loading="lazy">
+                <div class="gallery-overlay">Plated Perfection</div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/dws19.jpg" alt="Pineapple Bloom" loading="lazy">
+                <div class="gallery-overlay">Pineapple Bloom</div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/dws4.jpg" alt="Garden Melody" loading="lazy">
+                <div class="gallery-overlay">Garden Melody</div>
+            </div>
+            <div class="gallery-item wide">
+                <img src="images/dws12.jpg" alt="Roses or Berries?" loading="lazy">
+                <div class="gallery-overlay">Roses or Berries?</div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/dws23.jpg" alt="Veggie Bouquet" loading="lazy">
+                <div class="gallery-overlay">Veggie Bouquet</div>
+            </div>
+			<div class="gallery-item tall">
+                <img src="images/dws36.jpg" alt="Fruit and vegetables" loading="lazy">
+                <div class="gallery-overlay">Crowd Pleaser</div>
+            </div>    
+        </div>
+    </section>
+
+    <!-- ═══════════ TESTIMONIALS ═══════════ -->
+    <section id="testimonials" style="padding-top: 2rem;">
+        <div class="section-header">
+            <span class="section-label">Testimonials</span>
+            <h2 class="section-title">What Our Clients Say</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ CONTACT ═══════════ -->
+    <section id="contact">
+        <div class="section-header">
+            <span class="section-label">Get In Touch</span>
+            <h2 class="section-title">Book Your Event</h2>
+            <p class="section-subtitle">Tell us about your occasion and we'll create a bespoke catering experience just for you.</p>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Let's Talk</h3>
+                <p>We'd love to hear about your event. Reach out and we'll get back to you within 24 hours with a personalized quote.</p>
+                <div class="contact-detail">
+                    <div class="icon-circle" aria-hidden="true">📞</div>
+                    <div><strong>Phone</strong><br><a href="tel:+19053773406">(905) 377-3406</a></div>
+                </div>
+                <div class="contact-detail">
+                    <div class="icon-circle" aria-hidden="true">✉️</div>
+                    <div><strong>Email</strong><br><a href="mailto:platters@sheppardscreations.ca">platters@sheppardscreations.ca</a></div>
+                </div>
+                <div class="contact-detail">
+                    <div class="icon-circle" aria-hidden="true">📍</div>
+                    <div><strong>Location</strong><br>Northumberland, ON & Surrounding Areas</div>
+                </div>
+            </div>
+            <form class="contact-form" id="contactForm">
+                <label class="field-label" for="fullName">Full name</label>
+                <input id="fullName" name="name" type="text" placeholder="Your Full Name" autocomplete="name" required>
+
+                <label class="field-label" for="email">Email address</label>
+                <input id="email" name="email" type="email" placeholder="Email Address" autocomplete="email" required>
+
+                <label class="field-label" for="phone">Phone number <span aria-hidden="true">(optional)</span></label>
+                <input id="phone" name="phone" type="tel" placeholder="Phone Number" autocomplete="tel">
+
+                <label class="field-label" for="eventType">Event type</label>
+                <select id="eventType" name="eventType" required>
+                    <option value="" disabled selected>Select an event type</option>
+                    <option value="Wedding">Wedding</option>
+                    <option value="Corporate Event">Corporate Event</option>
+                    <option value="Birthday Party">Birthday Party</option>
+                    <option value="Private Dinner">Private Dinner</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label class="field-label" for="details">Event details</label>
+                <textarea id="details" name="details" placeholder="Tell us about your event — date, guest count, and any special requests..." required></textarea>
+                <p class="form-note">This static version opens a prepared message in your email app. Connect a secure form endpoint before using fully automated submissions.</p>
+                <button type="submit">Prepare Inquiry ✨</button>
+            </form>
+        </div>
+    </section>
+    </main>
+
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <h4>Sheppard's Creations</h4>
+                <p style="font-size:0.9rem;">Elevating events with handcrafted food platters since 2000.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/sheppards_creations/" target="_blank" rel="noopener noreferrer" aria-label="Sheppard's Creations on Instagram">📷</a>
+                    <a href="https://www.facebook.com/share/1ELMmT7Q4R/" target="_blank" rel="noopener noreferrer" aria-label="Sheppard's Creations on Facebook">📘</a>
+                    <a href="mailto:platters@sheppardscreations.ca" aria-label="Email Sheppard's Creations">✉️</a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <a href="#home">Home</a>
+                <a href="#platters">Platters</a>
+                <a href="#services">Services</a>
+                <a href="#gallery">Gallery</a>
+            </div>
+            <div class="footer-col">
+                <h4>Services</h4>
+                <a href="#contact">Wedding Catering</a>
+                <a href="#contact">Corporate Events</a>
+                <a href="#contact">Private Parties</a>
+                <a href="#contact">Grazing Tables</a>
+				<a href="#contact">Funeral Receptions</a>
+				<a href="#contact">Celebration of life</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="tel:+19053773406">(905) 377-3406</a>
+                <a href="mailto:platters@sheppardscreations.ca">platters@sheppardscreations.ca</a>
+                <span>Northumberland, ON</span>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Sheppard's Creations. All rights reserved. | Crafted with ❤️
+        </div>
+    </footer>
+
+    <!-- ═══════════ MODAL ═══════════ -->
+    <div class="modal-overlay" id="modalOverlay" hidden>
+        <div class="modal" id="inquiryDialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalMessage" tabindex="-1">
+            <div class="check-icon" aria-hidden="true">✉️</div>
+            <h3 id="modalTitle">Email Draft Prepared</h3>
+            <p id="modalMessage">Your email app should open with the inquiry details filled in. Review the message, then press Send in your email app.</p>
+            <button id="closeModal" type="button">Close</button>
+        </div>
+    </div>
+
+    <!-- ═══════════ JAVASCRIPT ═══════════ -->
+    <script>
+        (() => {
+            'use strict';
+
+            const navbar = document.getElementById('navbar');
+            const hamburger = document.getElementById('hamburger');
+            const navLinks = document.getElementById('navLinks');
+            const scrollToAbout = document.getElementById('scrollToAbout');
+            const contactForm = document.getElementById('contactForm');
+            const modalOverlay = document.getElementById('modalOverlay');
+            const inquiryDialog = document.getElementById('inquiryDialog');
+            const closeModalButton = document.getElementById('closeModal');
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const cateringEmail = 'platters@sheppardscreations.com';
+            let lastFocusedElement = null;
+            let scrollFrameRequested = false;
+
+            const updateNavbar = () => {
+                navbar.classList.toggle('scrolled', window.scrollY > 60);
+                scrollFrameRequested = false;
+            };
+
+            window.addEventListener('scroll', () => {
+                if (!scrollFrameRequested) {
+                    window.requestAnimationFrame(updateNavbar);
+                    scrollFrameRequested = true;
+                }
+            }, { passive: true });
+            updateNavbar();
+
+            const closeMenu = () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('open');
+                hamburger.setAttribute('aria-expanded', 'false');
+                hamburger.setAttribute('aria-label', 'Open navigation menu');
+                document.body.classList.remove('menu-open');
+            };
+
+            const openMenu = () => {
+                hamburger.classList.add('active');
+                navLinks.classList.add('open');
+                hamburger.setAttribute('aria-expanded', 'true');
+                hamburger.setAttribute('aria-label', 'Close navigation menu');
+                document.body.classList.add('menu-open');
+            };
+
+            hamburger.addEventListener('click', () => {
+                const isOpen = hamburger.getAttribute('aria-expanded') === 'true';
+                isOpen ? closeMenu() : openMenu();
+            });
+
+            navLinks.querySelectorAll('a').forEach((link) => {
+                link.addEventListener('click', closeMenu);
+            });
+
+            scrollToAbout.addEventListener('click', () => {
+                document.getElementById('about').scrollIntoView({
+                    behavior: reducedMotion ? 'auto' : 'smooth'
+                });
+            });
+
+            const showModal = () => {
+                lastFocusedElement = document.activeElement;
+                modalOverlay.hidden = false;
+                window.requestAnimationFrame(() => {
+                    modalOverlay.classList.add('active');
+                    inquiryDialog.focus();
+                });
+            };
+
+            const hideModal = () => {
+                modalOverlay.classList.remove('active');
+                window.setTimeout(() => {
+                    modalOverlay.hidden = true;
+                    lastFocusedElement?.focus();
+                }, reducedMotion ? 0 : 350);
+            };
+
+            closeModalButton.addEventListener('click', hideModal);
+            modalOverlay.addEventListener('click', (event) => {
+                if (event.target === modalOverlay) hideModal();
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key !== 'Escape') return;
+                if (!modalOverlay.hidden) hideModal();
+                closeMenu();
+            });
+
+            contactForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                if (!contactForm.checkValidity()) {
+                    contactForm.reportValidity();
+                    return;
+                }
+
+                const formData = new FormData(contactForm);
+                const name = String(formData.get('name') || '').trim();
+                const email = String(formData.get('email') || '').trim();
+                const phone = String(formData.get('phone') || '').trim();
+                const eventType = String(formData.get('eventType') || '').trim();
+                const details = String(formData.get('details') || '').trim();
+
+                const subject = `Catering inquiry: ${eventType} — ${name}`;
+                const body = [
+                    `Name: ${name}`,
+                    `Email: ${email}`,
+                    `Phone: ${phone || 'Not provided'}`,
+                    `Event type: ${eventType}`,
+                    '',
+                    'Event details:',
+                    details
+                ].join('/n');
+                showModal();
+                window.location.href = `mailto:${cateringEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            });
+
+            const revealElements = document.querySelectorAll(
+                '.platter-card, .service-card, .gallery-item, .testimonial-card, .about-image-wrapper, .stat-item'
+            );
+
+            if (reducedMotion || !('IntersectionObserver' in window)) {
+                revealElements.forEach((element) => element.classList.add('is-visible'));
+            } else {
+                const observer = new IntersectionObserver((entries, currentObserver) => {
+                    entries.forEach((entry) => {
+                        if (!entry.isIntersecting) return;
+                        entry.target.classList.add('is-visible');
+                        currentObserver.unobserve(entry.target);
+                    });
+                }, {
+                    threshold: 0.15,
+                    rootMargin: '0px 0px -40px 0px'
+                });
+
+                revealElements.forEach((element) => {
+                    element.classList.add('reveal');
+                    observer.observe(element);
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
