@@ -1049,7 +1049,7 @@
                 <img src="images/dws52.png" alt="Fruit flowers Platter" loading="lazy">
                 <div class="platter-card-body">
                     <h3>Signature Fruit Platter</h3>
-                    <span class="price">starting at $105</span>
+                    <span class="price">Starting at $105</span>
                     <p>Strawberries, pineapple, melon, grapes, starfruit, blueberries, and more.</p>
                 </div>
             </div>
@@ -1072,7 +1072,7 @@
             </div>
             <div class="platter-card">
                 <span class="platter-tag">Popular</span>
-                <img src="images/dws48.jpg" alt="A collection of tasty fruit and cheeeses." loading="lazy">
+                <img src="images/dws48.jpg" alt="A collection of tasty fruit and cheeses." loading="lazy">
                 <div class="platter-card-body">
                     <h3>Sweet and Savory Indulgence</h3>
                     <span class="price">Starting at $85</span>
@@ -1084,7 +1084,7 @@
                 <div class="platter-card-body">
                     <h3>Garden Fresh Bouquet</h3>
                     <span class="price">Starting at $82</span>
-                    <p>Expert fruity flower garnsishes arranged in way that will add a delicious aesthetic to your event of any kind!</p>
+                    <p>Expert fruity flower garnishes arranged in a way that will add a delicious aesthetic to your event of any kind!</p>
                 </div>
             </div>
             <div class="platter-card">
@@ -1128,8 +1128,8 @@
             </div>
 			<div class="service-card">
 			     <div class="service-icon" aria-hidden="true">🏠</div>
-				 <h3>Funeral Receptions/Celebration of life</h3>
-				 <p> Compassionate catering services for funeral Receptions, memorial gatherings, and celebrations of life. We provide beautifully prepared platters and professional service so families can focus on being together durring difficult time.
+				 <h3>Funeral Receptions &amp; Celebrations of Life</h3>
+				 <p>Compassionate catering services for funeral receptions, memorial gatherings, and celebrations of life. We provide beautifully prepared platters and professional service so families can focus on being together during difficult times.</p>
         </div>
     </section>
 
@@ -1169,15 +1169,6 @@
                 <img src="images/dws36.jpg" alt="Fruit and vegetables" loading="lazy">
                 <div class="gallery-overlay">Crowd Pleaser</div>
             </div>    
-        </div>
-    </section>
-
-    <!-- ═══════════ TESTIMONIALS ═══════════ -->
-    <section id="testimonials" style="padding-top: 2rem;">
-        <div class="section-header">
-            <span class="section-label">Testimonials</span>
-            <h2 class="section-title">What Our Clients Say</h2>
-            </div>
         </div>
     </section>
 
@@ -1222,6 +1213,8 @@
                     <option value="Corporate Event">Corporate Event</option>
                     <option value="Birthday Party">Birthday Party</option>
                     <option value="Private Dinner">Private Dinner</option>
+					<option value="Funeral Reception">Funeral Receptions</option>
+					<option value="Celebration of Life">Celebration of Life</option>
                     <option value="Other">Other</option>
                 </select>
 
@@ -1260,7 +1253,7 @@
                 <a href="#contact">Private Parties</a>
                 <a href="#contact">Grazing Tables</a>
 				<a href="#contact">Funeral Receptions</a>
-				<a href="#contact">Celebration of life</a>
+				<a href="#contact">Celebrations of Life</a>
             </div>
             <div class="footer-col">
                 <h4>Contact</h4>
@@ -1298,7 +1291,7 @@
             const inquiryDialog = document.getElementById('inquiryDialog');
             const closeModalButton = document.getElementById('closeModal');
             const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            const cateringEmail = 'platters@sheppardscreations.com';
+            const cateringEmail = 'platters@sheppardscreations.ca';
             let lastFocusedElement = null;
             let scrollFrameRequested = false;
 
@@ -1398,7 +1391,7 @@
                     '',
                     'Event details:',
                     details
-                ].join('/n');
+                ].join('\n');
                 showModal();
                 window.location.href = `mailto:${cateringEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             });
